@@ -8,8 +8,8 @@ import android.widget.TextView
 
 class MyListAdapter(
     private val context: Activity,
-    private val title: Array<String>,
-    private val description: Array<String>
+    private val title: ArrayList<String>,
+    private val description: ArrayList<String>
 ) : ArrayAdapter<String>(context, R.layout.custom_list, title) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val inflater = context.layoutInflater
