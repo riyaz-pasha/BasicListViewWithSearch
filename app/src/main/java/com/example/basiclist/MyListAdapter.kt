@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MyListAdapter(
     private val context: Activity,
@@ -22,5 +24,9 @@ class MyListAdapter(
         descriptionText.text = description[position]
 
         return rowView
+    }
+
+    fun filter(text: String?) {
+        val text = text!!.toLowerCase(Locale.getDefault())
     }
 }
