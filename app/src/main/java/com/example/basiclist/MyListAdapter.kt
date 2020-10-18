@@ -10,9 +10,8 @@ import kotlin.collections.ArrayList
 
 class MyListAdapter(
     private val context: Activity,
-    private val title: ArrayList<String>,
-    private val description: ArrayList<String>
-) : ArrayAdapter<String>(context, R.layout.custom_list, title) {
+    private val gameList: ArrayList<Game>
+) : ArrayAdapter<Game>(context, R.layout.custom_list, gameList) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val inflater = context.layoutInflater
         val rowView = inflater.inflate(R.layout.custom_list, null, true)
@@ -20,8 +19,8 @@ class MyListAdapter(
         val titleText = rowView.findViewById<TextView>(R.id.title)
         val descriptionText = rowView.findViewById<TextView>(R.id.description)
 
-        titleText.text = title[position]
-        descriptionText.text = description[position]
+        titleText.text = gameList[position].title
+        descriptionText.text = gameList[position].description
 
         return rowView
     }
