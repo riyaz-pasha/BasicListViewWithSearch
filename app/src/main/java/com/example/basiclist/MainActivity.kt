@@ -15,7 +15,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         setUpData()
-        println("****len*****" + gameList.size)
         findViewById<RecyclerView>(R.id.basicList).adapter = GameListAdapter(gameList)
     }
 
