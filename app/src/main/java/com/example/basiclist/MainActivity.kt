@@ -3,6 +3,7 @@ package com.example.basiclist
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ListView
+import androidx.recyclerview.widget.RecyclerView
 import org.json.JSONArray
 
 class MainActivity : AppCompatActivity() {
@@ -14,7 +15,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         setUpData()
-        findViewById<ListView>(R.id.basicList).adapter = MyListAdapter(this, gameList)
+        println("****len*****" + gameList.size)
+        findViewById<RecyclerView>(R.id.basicList).adapter = GameListAdapter(gameList)
     }
 
     private fun setUpData() {
