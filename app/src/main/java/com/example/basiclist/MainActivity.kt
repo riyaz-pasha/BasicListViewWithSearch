@@ -3,7 +3,9 @@ package com.example.basiclist
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ListView
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.basiclist.databinding.ActivityMainBinding
 import org.json.JSONArray
 
 class MainActivity : AppCompatActivity() {
@@ -12,10 +14,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
+        val binding: ActivityMainBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_main)
         setUpData()
-        findViewById<RecyclerView>(R.id.basicList).adapter = GameListAdapter(gameList)
+        binding.basicList.adapter = GameListAdapter(gameList)
     }
 
     private fun setUpData() {

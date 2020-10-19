@@ -1,10 +1,9 @@
 package com.example.basiclist
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.basiclist.databinding.CustomListBinding
 
 class GameListAdapter(private val data: List<Game>) :
     RecyclerView.Adapter<GameListAdapter.ViewHolder>() {
@@ -22,20 +21,19 @@ class GameListAdapter(private val data: List<Game>) :
 
     override fun getItemCount() = data.size
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val title: TextView = itemView.findViewById(R.id.title)
-        private val description: TextView = itemView.findViewById(R.id.description)
+    class ViewHolder(private val binding: CustomListBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(game: Game) {
-            title.text = game.title
-            description.text = game.description
+            binding.title.text = game.title
+            binding.description.text = game.description
         }
 
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val view = layoutInflater.inflate(R.layout.custom_list, parent, false)
-                return ViewHolder(view)
+                val binding = CustomListBinding.inflate(layoutInflater, parent, false)
+                return ViewHolder(binding)
             }
         }
     }
