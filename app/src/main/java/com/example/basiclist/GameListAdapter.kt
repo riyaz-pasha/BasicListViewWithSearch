@@ -2,11 +2,15 @@ package com.example.basiclist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.example.basiclist.databinding.CustomListBinding
 
 class GameListAdapter(private val data: List<Game>) :
-    RecyclerView.Adapter<GameListAdapter.ViewHolder>() {
+    RecyclerView.Adapter<GameListAdapter.ViewHolder>(), Filterable {
+
+    var gameFilterList = data;
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
@@ -14,12 +18,41 @@ class GameListAdapter(private val data: List<Game>) :
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val game = data[position]
+        val game = gameFilterList[position]
         holder.bind(game)
     }
 
 
-    override fun getItemCount() = data.size
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val resultList = ArrayList<Game>()
+                if (constraint.isNullOrEmpty()) {
+                    resultList.addAll(data)
+                } else {
+                    for (game in data) {
+                        if ((game.getTitle().toLowerCase() + game.getDescription().toLowerCase())
+                                .contains(constraint.toString().toLowerCase())
+                        ) {
+                            resultList.add(game)
+                        }
+                    }
+                }
+                val filterResults = FilterResults()
+                filterResults.values = resultList
+                return filterResults
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                gameFilterList = results?.values as List<Game>
+                notifyDataSetChanged()
+            }
+
+        }
+    }
+
+
+    override fun getItemCount() = gameFilterList.size
 
     class ViewHolder(private val binding: CustomListBinding) :
         RecyclerView.ViewHolder(binding.root) {

@@ -1,10 +1,9 @@
 package com.example.basiclist
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ListView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.RecyclerView
 import com.example.basiclist.databinding.ActivityMainBinding
 import org.json.JSONArray
 
@@ -18,7 +17,18 @@ class MainActivity : AppCompatActivity() {
         val binding: ActivityMainBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_main)
         setUpData()
-        binding.basicList.adapter = GameListAdapter(gameList)
+        val adapter = GameListAdapter(gameList)
+        binding.basicList.adapter = adapter
+        binding.searchGame.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.filter.filter(newText)
+                return false
+            }
+        })
     }
 
     private fun setUpData() {
